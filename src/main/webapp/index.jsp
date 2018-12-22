@@ -10,8 +10,5 @@
 	<p>
 		You are coming from 
 		<%= request.getRemoteAddr()  %></p>
-	<p>
-		Your Time Zome is
-		<%= new java.util.Timezone() %></p>
 	
 </body>
