@@ -3,7 +3,7 @@
 <title>Hello World!</title>
 </head>
 <body>
-	<h1> Verizon Application Testing. Author by Engineer Simon SMN!</h1>
+	<h1> Verizon Application  Deployment Testing. Author by Engineer Simon SMN!</h1>
 	<p>
 		It is now
 		<%= new java.util.Date() %></p>
