@@ -1,0 +1,7 @@
+node{
+   stage('Git Sub version Checkout'){
+     git 'https://github.com/yomesky2000/hello-world-war'
+   }
+   stage('Compile-Package){
+    sh 'mvn package'
+   }
