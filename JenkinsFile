@@ -2,6 +2,10 @@ node{
    stage('Git Sub version Checkout'){
      git 'https://github.com/yomesky2000/hello-world-war'
    }
-   stage('Compile-Package'){
-    sh 'mvn package'
+
+   stage('Compile-Package){
+      // Get Maven Home Path
+      def mvnHome = tool name: 'maven-3', type: 'maven'
+      sh "${mvnHome}/bin/mvn package"
    }
+}
