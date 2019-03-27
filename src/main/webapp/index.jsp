@@ -3,7 +3,7 @@
 <title>Hello World!</title>
 </head>
 <body>
-	<h1> Verizon Application Development Testing Successfull, Author by Honorable SMN!</h1>
+	<h1> Adakole is an incoming DevOps Engineer</h1>
 	<p>
 		It is now
 		<%= new java.util.Date() %></p>
