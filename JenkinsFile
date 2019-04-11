@@ -1,11 +1,24 @@
 node{
-   stage('Git Sub version Checkout'){
+   stage('SCM Checkout'){
      git 'https://github.com/yomesky2000/hello-world-war'
+     def mvnHome = tool name: 'Maven', type: 'maven'
    }
 
-   stage('Compile-Package'){
+   stage('Build'){
       // Get Maven Home Path
-      def mvnHome = tool name: 'maven-3', type: 'maven'
+      def mvnHome = tool name: 'Maven', type: 'maven'
       sh "${mvnHome}/bin/mvn package"
+      echo "Amin Test Successfull"
+   }
+   
+   stage('Test'){
+      // Get Maven Home Path
+      def mvnHome = tool name: 'Maven', type: 'maven'
+      sh "${mvnHome}/bin/mvn package"
+   }
+      stage('Deploy war file'){
+      def mvnHome = tool name: 'Maven', type: 'maven'
+      sh "scp /var/lib/jenkins/workspace/VerizonApp/target/hello-world-war-1.0.0.war root@10.0.0.13:/root/app/tomcat7/webapps"
+      
    }
 }
