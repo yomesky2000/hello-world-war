@@ -1,7 +1,7 @@
 stages:
 - stage: Build
   jobs:
-  - job: build
+  - job: CDAT App Build completed
     pool:
       vmImage: 'Ubuntu-16.04'
     continueOnError: true
@@ -10,7 +10,7 @@ stages:
 - stage: Test
   jobs:
     # track deployments on the environment
-  - deployment: DevEnvironment
+  - deployment: CDAT App Test Completed
     pool:
       vmImage: 'Ubuntu-16.04'
     # creates an environment if it doesn’t exist
@@ -23,7 +23,7 @@ stages:
           - script: echo Testing my Multi AzureDevOps Multi Pipeline
 - stage: deploy
   jobs:
-  - job: deploy
+  - job: CDAT App Deployment Completed
     pool:
       vmImage: 'Ubuntu-16.04'
     continueOnError: true
