@@ -1,7 +1,7 @@
 stages:
-- stage: Build
+- stage: Build 
   jobs:
-  - job: build completed
+  - job: build
     pool:
       vmImage: 'Ubuntu-16.04'
     continueOnError: true
@@ -10,7 +10,7 @@ stages:
 - stage: Test
   jobs:
     # track deployments on the environment
-  - deployment: test completed
+  - deployment: test 
     pool:
       vmImage: 'Ubuntu-16.04'
     # creates an environment if it doesn’t exist
@@ -23,7 +23,7 @@ stages:
           - script: echo Testing my Multi AzureDevOps Multi Pipeline
 - stage: deploy
   jobs:
-  - job: deploy completed
+  - job: deploy 
     pool:
       vmImage: 'Ubuntu-16.04'
     continueOnError: true
