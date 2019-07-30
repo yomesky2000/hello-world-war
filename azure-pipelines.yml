@@ -1,6 +1,7 @@
-stages:
+ stages:
 - stage: Build
   jobs:
+  - job: build
     pool:
       vmImage: 'Ubuntu-16.04'
     continueOnError: true
@@ -22,9 +23,9 @@ stages:
           - script: echo Testing my Multi AzureDevOps Multi Pipeline
 - stage: deploy
   jobs:
+  - job: deploy
     pool:
       vmImage: 'Ubuntu-16.04'
     continueOnError: true
     steps:
     - script: echo Deploy CDAT application
-
