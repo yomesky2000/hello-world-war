@@ -1,13 +1,13 @@
 stages:
 - stage: Build
   jobs:
-  - job: Build
+  - job: build
     pool:
       vmImage: 'Ubuntu-16.04'
     continueOnError: true
     steps:
     - script: echo RADV CDAT Build stage
-- stage: Deploy
+- stage: Test
   jobs:
     # track deployments on the environment
   - deployment: DevEnvironment
@@ -21,3 +21,12 @@ stages:
         deploy:
           steps:
           - script: echo Testing my Multi AzureDevOps Multi Pipeline
+  - stage: deploy
+  jobs:
+  - job: deploy
+    pool:
+      vmImage: 'Ubuntu-16.04'
+    continueOnError: true
+    steps:
+    - script: echo Deploy CDAT application
+
