@@ -21,7 +21,7 @@ stages:
         deploy:
           steps:
           - script: echo Testing my Multi AzureDevOps Multi Pipeline
-- stage: deploy
+- stage: Deploy
   jobs:
   - job: deploy
     pool:
