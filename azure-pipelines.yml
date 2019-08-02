@@ -1,5 +1,5 @@
 stages:
-- stage: Build-Stage
+- stage: Build_Stage
   jobs:
   - job: build
     pool:
@@ -7,7 +7,7 @@ stages:
     continueOnError: true
     steps:
     - script: echo RADV CDAT Build stage
-- stage: Test-Stage
+- stage: Test_Stage
   jobs:
     # track deployments on the environment
   - deployment: DevEnvironment
@@ -21,7 +21,7 @@ stages:
         deploy:
           steps:
           - script: echo Testing my Multi AzureDevOps Multi Pipeline
-- stage: Deploy-Stage
+- stage: Deploy_Stage
   jobs:
   - job: deploy
     pool:
