@@ -3,7 +3,7 @@
 <title>Hello World!</title>
 </head>
 <body>
-	<h1> TestApp1 Deployment Successful</h1>
+	<h1> Dell Application Deployment Successful. Author Engineer Ginger</h1>
 	<p>
 		It is now
 		<%= new java.util.Date() %></p>
