@@ -1,16 +1,15 @@
-# Pull docker base image for tomcat 8
-From tomcat:8-jre8
-# Maintainer
-MAINTAINER oluyomi sunmonu "honorable.ginger@local.comm"
+FROM centos
 
-# Update docker image to latest
-RUN yum update -y
+LABEL project="Engineer Ginger Apache Docker Image"
+LABEL maintainer "Oluyomi Sunmonu ginger@trafford-contractors.com"
 
-# Echo Message
-CMD ["echo", "Hello World...Welcome to my first docker image build"]
+RUN yum -y install httpd
+RUN echo "This Page Designed by Engineer Ginger, for Docker Build; Running on CentOS 7" > /var/www/html/index.html
 
-# Copy war file to another container
-COPY ./webapp.war /root/app/tomcat7/webapps
 
-# Echo war file successfully copy
-CMD ["echo", "Docker image successfully copied to container"]
+EXPOSE 80
+
+VOLUME /var/www/html
+
+ENTRYPOINT [ "/usr/sbin/httpd" ]
+CMD ["date"]
