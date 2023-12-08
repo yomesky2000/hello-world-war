@@ -1,6 +1,6 @@
 node{
    stage('SCM Checkout'){
-     git 'https://github.com/yomesky2000/pace-tech-app'
+     git 'https://github.com/yomesky2000/hello-world-war'
     // git 'https://github.com/yomesky2000/my-app'
      def mvnHome = tool name: 'maven', type: 'maven'
      echo "Cloning project baseline successful"
