@@ -1,24 +1,81 @@
 node{
    stage('SCM Checkout'){
-     git 'https://github.com/yomesky2000/hello-world-war'
-     def mvnHome = tool name: 'Maven', type: 'maven'
-   }
-
-   stage('Build'){
-      // Get Maven Home Path
-      def mvnHome = tool name: 'Maven', type: 'maven'
-      sh "${mvnHome}/bin/mvn package"
-      echo "Verizon Test Successfull"
+     git 'https://github.com/yomesky2000/pace-tech-app'
+    // git 'https://github.com/yomesky2000/my-app'
+     def mvnHome = tool name: 'maven', type: 'maven'
+     echo "Cloning project baseline successful"
    }
    
-   stage('Test'){
+    stage('Build & Package War'){
       // Get Maven Home Path
-      def mvnHome = tool name: 'Maven', type: 'maven'
-      sh "${mvnHome}/bin/mvn package"
-   }
-      stage('Deploy war file'){
-      def mvnHome = tool name: 'Maven', type: 'maven'
-      sh "scp /var/lib/jenkins/workspace/VerizonApp/target/hello-world-war-1.0.0.war root@tomcat-ip-addr:/root/app/tomcat7/webapps"
-      
-   }
+      def mvnHome = tool name: 'maven', type: 'maven'
+      def mvnCMD = "${mvnHome}/bin/mvn"
+	  sh "${mvnCMD} clean package"
+      echo "Pace-Technologies Application Build Successful"
+  }  
+  
+    stage('Build Docker Image'){
+	  sh 'docker build -t ginger2000/pace-tech-app:$BUILD_NUMBER .'
+    }
+    stage('SonarQube Analysis & Quality Gate'){
+	   def mvnHome = tool name: 'maven', type: 'maven'
+	   withSonarQubeEnv('sonarqube') {
+	     sh "${mvnHome}/bin/mvn sonar:sonar"
+	     echo "SonarQube Analysis Completed"
+    }
+	
+//     stage('Trivy Image Scanner'){
+// 	    script{
+// 	        sh 'whoami'
+// 	        // sh 'su - jenkins'
+// 	        sh '/usr/local/bin/trivy image ginger2000/pace-tech-app:$BUILD_NUMBER'
+// 	        echo "Trivy Image Scan Completed"
+// 	    }
+// 	}
+	
+	stage('Push Image to Registry'){
+      withCredentials([string(credentialsId: 'docker-pwd', variable: 'dockerhub')]) {
+         sh "docker login -u ginger2000 -p ${dockerhub}"
+      }
+	  sh 'docker push ginger2000/pace-tech-app:$BUILD_NUMBER'
+	  echo "Image Published to Docker-Hub Successfully"
+	    }  
+	
+    stage('Run Container on Dev-App-Server'){
+      def dockerRun = 'docker run -p 8080:8080 -d --name ginger2000/pace-tech-app:$BUILD_NUMBER'
+      sshagent(['tomcat-dev-server']) {
+        sh 'ssh -o StrictHostKeyChecking=no root@tomcat-srv-9.pace.comm ${dockerRun}'
+        echo "Application deployed to Dev-Tomcat Server Successfully"
+      }
+    }
+	
+	}
+
+	stage("Delete Old-Docker Image"){
+	    script{
+	        sh 'docker rmi ginger2000/pace-tech-app:$BUILD_NUMBER'
+	        echo "Old Docker Image Successfully Deleted"
+	    }
+    }
+	
+    stage('Deploy to Kubernetes Master Ecosystem')
+    {
+        steps{
+            sh "docker pull ginger2000/pace-tech-app:188"
+            sh "chmod +x changeTag.sh"
+            sh "./changeTag.sh ${DOCKER_TAG}"
+            sshagent(['Kubernetes']) {
+                "sh scp -o StrictHostKeyChecking=no services.yml pace-tech-app-pod.yml root@kub-mst-47.pace.comm:"
+                script{
+                    try{
+                        sh "ssh root@kub-mst-47.pace.comm kubectl apply -f ."
+                    }catch(error){
+                        sh "ssh root@kub-mst-47.pace.comm kubectl apply -f ."
+                        echo "Successfully Deployed Apps to Kubernetes Cluster Ecosystem"
+                    }
+                }
+            }
+        }
+    }
 }
+
