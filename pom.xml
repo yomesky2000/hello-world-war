@@ -5,8 +5,8 @@
 	<artifactId>tech-forward</artifactId>
 	<version>1.0.0</version>
 	<packaging>war</packaging>
-	<name>Tech Forward  Web Application Repository</name>
-	<description>Simple possible Java Webapp</description>
+	<name>Pace Technologies Web Application </name>
+	<description>Proof of Concept of Java Webapp</description>
 
 	<build>
 		<plugins>
@@ -21,7 +21,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-war-plugin</artifactId>
-				<version>2.1.1</version>
+				<version>1.0.0</version>
 			</plugin>
 		</plugins>
 	</build>
